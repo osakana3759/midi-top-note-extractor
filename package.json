@@ -1,9 +1,11 @@
 {
-  "name": "midi-high-note-cleaner",
+  "name": "midi-top-note-extractor",
   "version": "1.0.0",
-  "private": false,
+  "private": true,
   "type": "module",
-  "description": "A browser-based tool that keeps the highest active MIDI note per track.",
+  "description": "A browser-based tool that keeps only the highest note at each moment in MIDI tracks.",
+  "license": "MIT",
+  "author": "osakana3759",
   "scripts": {
     "test": "node --test"
   }
