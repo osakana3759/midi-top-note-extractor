@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="ブラウザ内でMIDIの各トラックから、同時に鳴る音のうち最も高い音を残すツール。">
+  <meta name="theme-color" content="#f8f9fa">
+  <title>MIDI Top Note Extractor</title>
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <div class="card">
+    <header>
+      <h1>MIDI Top Note Extractor</h1>
+      <p class="sub">各トラック内で同時に鳴っている音を比較し、その区間で最も高い音だけを残します。</p>
+    </header>
+
+    <section class="panel" aria-labelledby="load-heading">
+      <h2 id="load-heading">1. MIDIファイルを読み込む</h2>
+      <label class="drop" id="dropZone" for="file">
+        <div class="main-txt">MIDIファイルをここにドロップ<br>またはクリックして選択</div>
+        <div class="sub-txt">.mid / .midi</div>
+      </label>
+      <input id="file" type="file" accept=".mid,.midi,audio/midi">
+      <div class="picked" id="pickedBar" hidden>
+        <span class="name" id="fileInfo"></span>
+        <button class="clear" id="clearBtn" type="button" title="ファイルを削除" aria-label="ファイルを削除">✕</button>
+      </div>
+    </section>
+
+    <section class="panel" aria-labelledby="tracks-heading">
+      <div class="section-heading">
+        <h2 id="tracks-heading">2. 処理するトラックを選択</h2>
+        <div class="button-row">
+          <button class="button secondary" id="all" disabled>すべて選択</button>
+          <button class="button secondary" id="none" disabled>すべて解除</button>
+        </div>
+      </div>
+      <div id="tracks" class="tracklist" aria-live="polite">
+        <p class="muted">MIDIを読み込むとトラックが表示されます。</p>
+      </div>
+    </section>
+
+    <section class="panel" aria-labelledby="process-heading">
+      <h2 id="process-heading">3. 処理してダウンロード</h2>
+      <p class="result-note">重なりの途中で高い音が始まった場合、低い音はその区間だけ分割・削除されます。高い音が終わった後に低い音が続く場合は、残りの部分を復元します。</p>
+      <div class="action-row">
+        <span class="muted" id="selection">対象トラック：0</span>
+      </div>
+      <div class="toggle-row">
+        <div>
+          <span class="lbl">選択していないトラックを残す</span>
+          <div class="muted" id="keepHint">ON：処理せずそのまま出力します。</div>
+        </div>
+        <button type="button" class="switch on" id="toggleKeep" role="switch" aria-checked="true" aria-label="選択していないトラックを残す"><span class="knob"></span></button>
+      </div>
+      <button class="button primary main-action" id="process" disabled>最高音だけ残してMIDIを書き出す</button>
+      <div id="status" class="status" role="status" aria-live="polite">MIDIファイルを読み込んでください。</div>
+      <div id="stats" class="stats" hidden>
+        <div class="stat"><b id="before">0</b><span>処理前ノート数</span></div>
+        <div class="stat"><b id="after">0</b><span>処理後ノート数</span></div>
+        <div class="stat"><b id="removed">0</b><span>削除・分割されたノート</span></div>
+      </div>
+    </section>
+
+    <footer>
+      端末内で処理されるためファイルは外部送信されません<br>
+      SMF format 0 / 1 対応 · 元ファイルは変更されません<br>
+      Made by osakana3759
+    </footer>
+  </div>
+  <script type="module" src="./src/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,10 @@
+{
+  "name": "midi-high-note-cleaner",
+  "version": "1.0.0",
+  "private": false,
+  "type": "module",
+  "description": "A browser-based tool that keeps the highest active MIDI note per track.",
+  "scripts": {
+    "test": "node --test"
+  }
+}
